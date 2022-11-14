@@ -3,7 +3,7 @@ version: '3.8'
 services:
     dev:
         container_name: go-back-dev
-        image: go-back-dev:lastest
+        image: go-back-dev:latest
         build:
             context: .
             target: development
@@ -20,7 +20,7 @@ services:
         restart: unless-stopped
     prod:
         container_name: go-back-prod
-        image: go-back:lastest
+        image: go-back:latest
         build:
             context: .
             target: production
