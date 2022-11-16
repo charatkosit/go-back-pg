@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -22,8 +22,8 @@ export class ProductsController {
   @Get('search')
   findBySearch(@Query() query: any) {
     return this.productsService.findBySearch(query.var1);
-    // return query;
   }
+
 
 
   @Get()
