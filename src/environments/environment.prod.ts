@@ -6,7 +6,7 @@ export const environment = {
   dbUsername:"%dbUsername%",
   dbPassword: "%dbPassword%",
   dbName: "%dbName%",
-  synchronize: "%synchoize%",
+  synchronize: "%synchronize%",
   sapUrl: "%sapUrl%",
   sapApiToken:"%sapApiToken%",
   baseUrl: "",
