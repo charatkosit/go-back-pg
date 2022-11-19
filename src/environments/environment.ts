@@ -1,15 +1,15 @@
 /* eslint-disable prettier/prettier */
 export const environment = {
   production: false,
-  dbUrl: "44.212.248.132",
+  dbUrl: "54.224.78.26",
   port: 3308,
   dbUsername: "root",
   dbPassword: "1234",
   dbName: "testhaha",
   synchronize: true,
-  sapUrl: "http://goapi.ddns.net:3000/api/v1/",
+  sapUrl: "http://192.168.20.17:8880/apigoplus/GetBillTo/",
   sapApiToken: "z@hz3sNY#0ohB9SspeE9@fLDQ%r65x$k8LxL28VH72FfvRWgCn",
   baseUrl: "",
-  project: "Build Dev:v0.1.3a on 27/10/22",
-  release: "0.0.5",
+  project: "Build Dev:v0.1.3a on 19/11/22",
+  release: "0.0.25",
 };

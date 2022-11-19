@@ -4,12 +4,15 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 
+
 @Controller({
   version : '1',
   path: 'products'
 }
   )
 export class ProductsController {
+
+
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
@@ -20,8 +23,27 @@ export class ProductsController {
 
   
   @Get('search')
-  findBySearch(@Query() query: any) {
-    return this.productsService.findBySearch(query.var1);
+  async findBySearch(@Query() query: any) {
+    const data = await this.productsService.findBySearch(query.ItemName,query.ItemCode,query.Brand,query.Model,);
+    const counter:number = Object.keys(data).length
+    let code:number;
+    let message:string;
+    console.log (counter);
+    if (counter == 0) {
+        code =HttpStatus.NOT_FOUND;
+        message='Not Found';  
+    }else {
+        code =HttpStatus.OK;
+        message='OK';
+    }
+    
+    return {
+      code: code,
+      message: message,
+      resultFound: counter,
+      data
+    } 
+        
   }
 
 

@@ -2,13 +2,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { myProduct } from '../interfaces/MyProduct'
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 
 @Injectable()
+
 export class ProductsService {
+ 
   constructor(
     @InjectRepository(Product)
     private productsRepository: Repository<Product>,
@@ -27,12 +30,14 @@ export class ProductsService {
     return await 'find all' ;
   }
 
-  async findBySearch(var1: string) :Promise<any[]> {
-    const sql = `select * from product where ItemName like "%${var1}%" `;
-    return  await this.productsRepository.query(sql);
- 
-
-
+  async findBySearch(ItemName: string,ItemCode:string, Brand:string, Model:string) :Promise<any> {
+    const sql = `select * from product where ItemName like "%${ItemName}%"
+                    and ItemCode like "%${ItemCode}%"
+                    and Brand like "%${Brand}%"
+                    and Model like "%${Model}%"
+                    limit 50 `;
+      return await this.productsRepository.query(sql);
+    
    
   }
 
