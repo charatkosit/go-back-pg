@@ -11,5 +11,5 @@ export const environment = {
   sapApiToken: "z@hz3sNY#0ohB9SspeE9@fLDQ%r65x$k8LxL28VH72FfvRWgCn",
   baseUrl: "",
   project: "Build Dev:v0.1.3a on 19/11/22",
-  release: "0.0.25",
+  release: "0.0.34",
 };
