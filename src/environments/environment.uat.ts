@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 export const environment = {
     production: false,
-    dbUrl: "52.54.69.220",
+    dbUrl: "54.224.78.26",
     port: 3308,
     dbUsername: "root",
     dbPassword: "1234",
