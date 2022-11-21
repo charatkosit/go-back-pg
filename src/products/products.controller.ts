@@ -25,11 +25,14 @@ export class ProductsController {
   @Get('search')
   async findBySearch(@Query() query: any) {
     const data = await this.productsService.findBySearch(query.ItemName,query.ItemCode,query.Brand,query.Model,);
-    const counter:number = Object.keys(data).length
+    const total = await this.productsService.findTotalBySearch(query.ItemName,query.ItemCode,query.Brand,query.Model,);
+
+   // const counter:number = Object.keys(data).length
+
     let code:number;
     let message:string;
-    console.log (counter);
-    if (counter == 0) {
+    console.log (total);
+    if (total == 0) {
         code =HttpStatus.NOT_FOUND;
         message='Not Found';  
     }else {
@@ -40,7 +43,7 @@ export class ProductsController {
     return {
       code: code,
       message: message,
-      resultFound: counter,
+      resultFound: total,
       data
     } 
         

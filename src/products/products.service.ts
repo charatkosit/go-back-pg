@@ -36,10 +36,23 @@ export class ProductsService {
                     and Brand like "%${Brand}%"
                     and Model like "%${Model}%"
                     limit 50 `;
-      return await this.productsRepository.query(sql);
-    
-   
+
+      return await this.productsRepository.query(sql);  
   }
+
+
+  async findTotalBySearch(ItemName: string,ItemCode:string, Brand:string, Model:string) :Promise<any> {
+    const sql = `select count(*) as total where ItemName like "%${ItemName}%"
+        and ItemCode like "%${ItemCode}%"
+        and Brand like "%${Brand}%"
+        and Model like "%${Model}%"`
+
+      return await this.productsRepository.query(sql);  
+  }
+
+
+
+
 
   findOne(id: number) {
     return `This action returns a #${id} product`;
