@@ -36,3 +36,6 @@ lerna-debug.log*
 
 #environment dev
 environment.ts
+environment.sit.ts
+environment.uat.ts
+environment.prod.ts
