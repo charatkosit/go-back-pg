@@ -14,6 +14,9 @@ export class AppController {
   // getMovies(): Movie[] {
   //   return this.appService.getMovies();
   // }
+
+
+
   getenvStatus() {
     const data = this.appService.getenvStatus();
     const counter:number = Object.keys(data).length

@@ -2,6 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { environment } from './environments/environment';
 
+
 export interface Movie {
   id: number;
   name: string;
@@ -26,6 +27,8 @@ export interface Envs {
 
 @Injectable()
 export class AppService {
+
+ 
   private movies: Movie[] = [
     { id: 1, name: 'Star Wars: The Force Awakens', year: 2015 },
     { id: 2, name: 'Star Wars: The Last Jedi', year: 2017 },
@@ -56,4 +59,6 @@ export class AppService {
   getenvStatus(): Envs[] {
     return this.envStatus;
   }
+
+
 }

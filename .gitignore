@@ -39,3 +39,5 @@ lerna-debug.log*
 environment.sit.ts
 environment.uat.ts
 environment.prod.ts
+
+/mysql_dev

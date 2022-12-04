@@ -1,8 +1,10 @@
+/* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { Pagination } from 'src/interfaces/Pagination';
 
 
 @Controller({
@@ -20,8 +22,52 @@ export class ProductsController {
     return this.productsService.create(createProductDto);
   }
 
+  @Get('pagination')
+  async findAllWithPagination(@Query() query:Pagination){
 
+    console.log(query)
+    let code:number;
+    let message:string;
+    let counter = 100;
   
+  
+    
+    const result = await this.productsService.findAllWithPagination(query.page, query.page_size, query.ItemName, query.Brand, query.Model)
+    const total = await this.productsService.total(query.ItemName, query.Brand, query.Model)
+    
+   console.log(total[0].total)
+   counter= total[0].total
+
+    if (counter == 0) {
+        code =HttpStatus.NOT_FOUND;
+        message='Not Found';  
+    }else {
+        code =HttpStatus.OK;
+        message='OK';
+    }
+    
+    return {
+      code: code,
+      message: message,
+      resultFound: counter,
+      data: result
+    } 
+  }
+
+
+  @Get('bill')
+  getBill(){
+    // return "bill return"
+    return this.productsService.getBillTo();
+  } 
+
+  @Get('total')
+  async getTotal(@Query() query:any){
+   
+   return await this.productsService.total(query.ItemName, query.Brand, query.Model)
+ 
+  }
+
   @Get('search')
   async findBySearch(@Query() query: any) {
     const data = await this.productsService.findBySearch(query.ItemName,query.ItemCode,query.Brand,query.Model,);
