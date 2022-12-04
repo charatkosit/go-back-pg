@@ -90,14 +90,15 @@ export class ProductsService {
   }
 
 
-  async findAllWithPagination(page: number = 1, page_size: number = 50, itemName: string, brand: string, model: string): Promise<any> {
+  async findAllWithPagination(page: number = 1, page_size: number = 20, brand: string, itemName: string, itemCode: string, model: string): Promise<any> {
 
     const result = await this.productsRepository.find({
       where: {
+        Brand: Like('%' + brand + '%'),
         ItemName: Like('%' + itemName + '%'),
-        //  ItemCode: Like('%'+ itemCode+'%'),
+        ItemCode: Like('%' + itemCode + '%'),
         Model: Like('%' + model + '%'),
-        Brand: Like('%' + brand + '%')
+
       },
       order: { id: 'ASC' },
       skip: (page - 1) * page_size,
@@ -109,10 +110,12 @@ export class ProductsService {
 
   }
 
-  async total(itemName: string, brand: string, model: string): Promise<any> {
-    const sql = `SELECT COUNT(*) AS total  from product where ItemName LIKE '%${itemName}%'
-    AND Brand LIKE '%${brand}%'
+  async total(brand: string, itemName: string, itemCode: string,  model: string): Promise<any> {
+    const sql = `SELECT COUNT(*) AS total  from product where Brand LIKE '%${brand}%'
+    AND ItemName LIKE '%${itemName}%'
+    AND ItemCode LIKE '%${itemCode}%'
     AND Model LIKE '%${model}%'`
+
     const total = await this.productsRepository.query(sql);
 
     return total

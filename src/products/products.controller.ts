@@ -32,8 +32,8 @@ export class ProductsController {
   
   
     
-    const result = await this.productsService.findAllWithPagination(query.page, query.page_size, query.ItemName, query.Brand, query.Model)
-    const total = await this.productsService.total(query.ItemName, query.Brand, query.Model)
+    const result = await this.productsService.findAllWithPagination(query.page, query.page_size, query.Brand, query.ItemName, query.ItemCode, query.Model)
+    const total = await this.productsService.total(query.Brand, query.ItemName, query.ItemCode, query.Model)
     
    console.log(total[0].total)
    counter= total[0].total
@@ -64,7 +64,7 @@ export class ProductsController {
   @Get('total')
   async getTotal(@Query() query:any){
    
-   return await this.productsService.total(query.ItemName, query.Brand, query.Model)
+   return await this.productsService.total(query.Brand, query.ItemName, query.ItemCode, query.Model)
  
   }
 
