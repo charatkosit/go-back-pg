@@ -1,26 +1,45 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm/repository/Repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Users } from './entities/users.entity';
+import * as argon2 from 'argon2'
+import { NotFoundException } from '@nestjs/common/exceptions';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(@InjectRepository(Users)
+  private usersRepository: Repository<Users>) {
+
+  }
+  async create(createUserDto: CreateUserDto): Promise<Users> {
+    const user = new Users();
+    user.FullName = createUserDto.FullName;
+    user.CodeUserId = createUserDto.CodeUserId;
+    user.email = createUserDto.email;
+    user.Password = await argon2.hash(createUserDto.Password);
+    user.Permission = createUserDto.Permission;
+    return await this.usersRepository.save(user);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.usersRepository.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+      return await this.usersRepository.findOne({where: { UserId: id} })
+      // ถ้าไม่มีรายชื่อ ควรแสดง error ออกไป
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto):Promise<UpdateResult> {
+    return await this.usersRepository.update(id,updateUserDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  async remove(id: number) :  Promise<DeleteResult> {
+    return await this.usersRepository.delete({UserId:id})
+}
 }

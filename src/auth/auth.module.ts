@@ -1,9 +1,26 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-
+import { UsersModule } from 'src/users/users.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Users } from 'src/users/entities/users.entity';
+import { JwtStrategy } from './jwt.strategy';
 @Module({
-  providers: [AuthService],
-  controllers: [AuthController]
+  imports:[
+    UsersModule,
+    PassportModule,
+    JwtModule.register({
+      signOptions: { expiresIn: '7d'},
+    }),
+    TypeOrmModule.forFeature([Users]),
+  ],
+  providers: [AuthService,
+              JwtStrategy,
+            ],
+  controllers: [AuthController],
+
 })
 export class AuthModule {}
