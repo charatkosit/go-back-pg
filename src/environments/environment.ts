@@ -11,6 +11,6 @@ export const environment = {
   sapApiToken: "z@hz3sNY#0ohB9SspeE9@fLDQ%r65x$k8LxL28VH72FfvRWgCn",
   jwt_secrect: "!z$C&F)J@NcRfUjXn2r5u8x/A?D*G-Ka",
   baseUrl: "",
-  project: "Build Dev:v0.1.4a on 19/11/22",
+  project: "Build Dev:v0.1.4b on 19/11/22",
   release: "%release%",
 };
