@@ -11,7 +11,11 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   // app.enableCors();
-  app.enableCors({ origin: 'http://172.41.61.11:8000' });
+  app.enableCors({
+    origin: ['http://172.41.62.164:3000', 'http://172.41.60.18:3000'],
+    methods: ['GET', 'POST'],
+    credentials: false,
+  });
   await app.listen(3000);
 }
 bootstrap();
