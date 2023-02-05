@@ -10,7 +10,8 @@ async function bootstrap() {
   });
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors();
+  // app.enableCors();
+  app.enableCors({ origin: 'http://172.41.61.11:8000' });
   await app.listen(3000);
 }
 bootstrap();
