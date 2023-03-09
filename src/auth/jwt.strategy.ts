@@ -20,13 +20,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: any){
-            const user = await this.userRepository.findOne( {where: {UserId: payload.user_id}})
+          console.log(`payload is ${payload}`)
+            const user = await this.userRepository.findOne( {where: {UserId: payload.userId}})
             if(!user){
                 throw new NotFoundException('ไม่พบผู้ใช้งานในระบบ')
             }
         return {
             id: user.UserId,
             fullName: user.FullName,
+            codeUserId: user.CodeUserId,
             email: user.email,
             permission: user.Permission
         }
