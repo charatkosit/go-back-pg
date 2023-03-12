@@ -8,7 +8,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Pagination } from 'src/interfaces/Pagination';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller({
   version : '1',
   path: 'products'

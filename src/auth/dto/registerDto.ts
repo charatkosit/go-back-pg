@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-export interface Register {
+export class RegisterDto {
     FullName: string;
     CodeUserId: string;
     Email: string;

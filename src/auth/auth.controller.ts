@@ -8,6 +8,7 @@ import { Users } from 'src/users/entities/users.entity';
 import { UsersService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/loginDto';
+import { RegisterDto } from './dto/registerDto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller({
@@ -36,13 +37,17 @@ export class AuthController {
 
     }
 
-
+    // localhost:3000/api/v1/auth/register
     @Post('register')
-    register(@Body() body:Register){
-    return this.authService.register(body)
+    // @UsePipes(ValidationPipe)
+    register(@Body() registerDto:RegisterDto){
+    const {  FullName, CodeUserId, Email,
+              Password, Permission } = registerDto;
+      console.log(`${FullName}, ${CodeUserId}, ${Email}, ${Password}, ${Permission}`)         
+    return this.authService.register(registerDto)
     }
 
-    // localhost:3000/api/v1/auth/profiles
+    // localhost:3000/api/v1/auth/profiles  + with token access
     @UseGuards(JwtAuthGuard)
     @Get('profile')
     getProfile(@Req() req:any){

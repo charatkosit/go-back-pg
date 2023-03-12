@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as argon2 from 'argon2'
 import { environment } from 'src/environments/environment';
 import { Users } from 'src/users/entities/users.entity';
 import { Repository } from 'typeorm';
+import { RegisterDto } from './dto/registerDto';
 
 
 @Injectable()
@@ -50,7 +51,24 @@ export class AuthService {
         return await this.usersRepository.find()
     }
 
-    register(body) {
-        return body
+   async register(registerDto:RegisterDto) {
+    //1. นำ email ไปตรวจสอบ ว่าซ้ำหรือไม่
+    //2. ถ้าไม่ซ้ำ ให้สร้าง 
+    //3. permission default ให้เป็น member
+    //4. password ให้เข้ารหัส
+    const userExists = await this.usersRepository.findOne({
+        select: ['UserId'],
+        where: { email: registerDto.Email}
+    })
+  
+    if (userExists) {
+        throw new ConflictException('มี email นี้แล้วในระบบ')
+    }
+
+
+
+
+
+        return registerDto;
     }
 }
