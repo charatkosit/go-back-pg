@@ -1,6 +1,6 @@
 {
   "name": "go-back",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "author": "",
   "private": true,
@@ -33,6 +33,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "config": "^3.3.8",
+    "helmet": "^6.0.1",
     "mysql2": "^2.3.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",

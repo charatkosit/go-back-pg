@@ -19,6 +19,28 @@ export class AuthService {
         private jwtService: JwtService
     ) { }
 
+
+    async changePasswd(email:string , password:string, newPassword:string) {
+        // ตรวจสอบ  email นี้ว่ามีจริงหรือเปล่่า
+        const user = await this.usersRepository.findOne({
+            select: ['UserId', 'FullName','Password', 'Permission'],
+            where: { email: email }
+        })
+        if (!user) {
+            throw new NotFoundException('ไม่พบผู้ใช้ในระบบ')
+        }
+
+        // ตรวจสอบว่า password เก่าว่าถูกต้องหรือไม่
+        const isValid = await argon2.verify(user.Password, password)
+        if (!isValid) {
+            throw new UnauthorizedException('รหัสผ่านไม่ถูกต้อง')
+        }
+
+        // นำรหัสใส่ เข้ารหัส และ save
+
+    }
+
+
     async login(email: string, password: string) {
         // const user = { email: 'charatkosit@gmail.com', password: '1234'}
         const user = await this.usersRepository.findOne({

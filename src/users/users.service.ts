@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   async findAll() {
-    return await this.usersRepository.find()
+    return await this.usersRepository.find( {select: ['UserId', 'FullName','CodeUserId', 'email', 'Permission','status']})
   }
 
   async findOne(id: number) {

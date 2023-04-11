@@ -21,6 +21,12 @@ export class Users {
   @Column({default: 'member'})
   Permission: string;
 
+  @Column({default: 'waiting'})
+  status: string;
+
+
+  
+
 
 
 }
