@@ -5,4 +5,5 @@ export class RegisterDto {
     Email: string;
     Password: string;
     Permission: string;
+    status: string;
 }

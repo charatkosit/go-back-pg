@@ -19,20 +19,19 @@ import { ChangePasswdDto } from './dto/changePasswdDto';
 })
 export class AuthController {
     constructor(private readonly authService: AuthService,
-        private readonly usersService: UsersService
-    ) {
-
-    }
+                private readonly usersService: UsersService ) {}
 
     //localhost:3000/api/v1/auth/users
+    @UseGuards(JwtAuthGuard)
     @Get('users')
     findAllUsers() {
-        return this.usersService.findAll();
+        return this.authService.findAllUsers();
     }
 
 
     //localhost:3000/api/v1/auth/login
     @Post('login')
+    // @UsePipes(ValidationPipe)
     @HttpCode(200)
     login(@Body() loginDto: LoginDto) {
         // console.log(loginDto)
@@ -49,6 +48,7 @@ export class AuthController {
         console.log(`${FullName}, ${CodeUserId}, ${Email}, ${Password}, ${Permission}`)
         return this.authService.register(registerDto)
     }
+
 
     // localhost:3000/api/v1/auth/profiles  + with token access
     @UseGuards(JwtAuthGuard)

@@ -1,6 +1,6 @@
 {
   "name": "go-back",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "author": "",
   "private": true,
@@ -26,7 +26,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/mapped-types": "*",
-    "@nestjs/passport": "^9.0.0",
+    "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
     "argon2": "^0.30.2",
@@ -37,10 +37,13 @@
     "mysql2": "^2.3.3",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
+    "passport-otp": "^0.0.1",
     "pg": "^8.8.0",
+    "qrcode": "^1.5.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.7",
+    "speakeasy": "^2.0.0",
     "typeorm": "^0.3.10"
   },
   "devDependencies": {

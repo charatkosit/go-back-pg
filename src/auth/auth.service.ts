@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 import { Users } from 'src/users/entities/users.entity';
 import { Repository } from 'typeorm';
 import { RegisterDto } from './dto/registerDto';
+import * as speakeasy from 'speakeasy';
+import * as qrcode from 'qrcode';
 
 
 @Injectable()
@@ -20,10 +22,12 @@ export class AuthService {
     ) { }
 
 
-    async changePasswd(email:string , password:string, newPassword:string) {
+
+
+    async changePasswd(email: string, password: string, newPassword: string) {
         // ตรวจสอบ  email นี้ว่ามีจริงหรือเปล่่า
         const user = await this.usersRepository.findOne({
-            select: ['UserId', 'FullName','Password', 'Permission'],
+            select: ['UserId', 'FullName', 'Password', 'Permission'],
             where: { email: email }
         })
         if (!user) {
@@ -39,6 +43,9 @@ export class AuthService {
         // นำรหัสใส่ เข้ารหัส และ save
 
     }
+
+
+
 
 
     async login(email: string, password: string) {
@@ -69,28 +76,88 @@ export class AuthService {
         return { access_token: token }
     }
 
+
+
+
+
+
     async findAllUsers() {
-        return await this.usersRepository.find()
-    }
-
-   async register(registerDto:RegisterDto) {
-    //1. นำ email ไปตรวจสอบ ว่าซ้ำหรือไม่
-    //2. ถ้าไม่ซ้ำ ให้สร้าง 
-    //3. permission default ให้เป็น member
-    //4. password ให้เข้ารหัส
-    const userExists = await this.usersRepository.findOne({
-        select: ['UserId'],
-        where: { email: registerDto.Email}
-    })
-  
-    if (userExists) {
-        throw new ConflictException('มี email นี้แล้วในระบบ')
+        return await this.usersRepository.find({ select: ['UserId', 'FullName', 'CodeUserId', 'email', 'Permission', 'status'] })
     }
 
 
 
 
+    async register(registerDto: RegisterDto): Promise<Users> {
+        //1. นำ email ไปตรวจสอบ ว่าซ้ำหรือไม่
+        //2. ถ้าไม่ซ้ำ ให้สร้าง 
+        //3. permission default ให้เป็น member
+        //4. password ให้เข้ารหัส
+        console.log(`email is ${registerDto.Email}`)
+        const userExists = await this.usersRepository.findOne({
+            select: ['UserId'],
+            where: { email: registerDto.Email }
+        })
 
-        return registerDto;
+        if (userExists) {
+            console.log(userExists)
+            console.log(registerDto.Email)
+            throw new ConflictException('มี email นี้แล้วในระบบ')
+
+        }
+
+        const user = new Users();
+        user.FullName = registerDto.FullName;
+        user.CodeUserId = registerDto.CodeUserId;
+        user.email = registerDto.Email;
+        user.Password = await argon2.hash(registerDto.Password);
+        user.Permission = registerDto.Permission;
+        user.status = registerDto.status;
+
+        return await this.usersRepository.save(user)
     }
+
+    //------------------------------------------------
+    //     function สำหรับทำ  2FA                     |
+    //                                               |
+    //------------------------------------------------
+
+    // ฟังก์ชันตรวจสอบ OTP
+    async verifyOtp(token: string, user: any): Promise<boolean> {
+        // นำ OTP secret ของผู้ใช้มาจากฐานข้อมูลหรือแหล่งข้อมูลอื่น ๆ
+        const otpSecret = user.otpSecret;
+        // ตรวจสอบ OTP
+        const isValid = speakeasy.totp.verify({
+            secret: otpSecret,
+            encoding: 'base32',
+            token: token,
+            window: 1, // กำหนดหน้าต่างของOTP ที่ยอมรับ (ในกรณีนี้คือ 1 นาที)
+        });
+        return isValid;
+    }
+
+
+
+    generateQRCode(secret: string, username: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+          const otpAuthUrl = speakeasy.otpauthURL({
+            secret,
+            label: username,
+            issuer: 'YourApp',
+            encoding: 'base32',
+          });
+          qrcode.toDataURL(otpAuthUrl, (err, dataUrl) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(dataUrl);
+            }
+          });
+        });
+      }
+
+      
 }
+
+
+

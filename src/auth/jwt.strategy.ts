@@ -5,6 +5,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { environment } from "src/environments/environment";
+import { JwtPayload } from "src/interfaces/JwtPayload";
 import { Users } from "src/users/entities/users.entity";
 import { Repository } from "typeorm";
 
@@ -19,8 +20,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         })
     }
 
-    async validate(payload: any){
-          console.log(`payload is ${payload}`)
+    async validate(payload: JwtPayload){
+          console.log(`payload is ${payload.permission}`)
             const user = await this.userRepository.findOne( {where: {UserId: payload.userId}})
             if(!user){
                 throw new NotFoundException('ไม่พบผู้ใช้งานในระบบ')
