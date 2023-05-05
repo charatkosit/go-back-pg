@@ -12,6 +12,8 @@ import { LoginDto } from './dto/loginDto';
 import { RegisterDto } from './dto/registerDto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { ChangePasswdDto } from './dto/changePasswdDto';
+import { env } from 'process';
+import { environment } from 'src/environments/environment';
 
 @Controller({
     version: '1',
@@ -28,6 +30,11 @@ export class AuthController {
         return this.authService.findAllUsers();
     }
 
+    //localhost:3000/api/v1/auth/backRev
+    @Get('backRev')
+    getVersion(){
+        return { backRev: environment.release }
+    }
 
     //localhost:3000/api/v1/auth/login
     @Post('login')
