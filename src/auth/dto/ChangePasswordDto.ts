@@ -2,7 +2,7 @@
 import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
 
 /* eslint-disable prettier/prettier */
-export class ChangePasswdDto {
+export class ChangePasswordDto {
     Token: string;
 
 
@@ -12,12 +12,12 @@ export class ChangePasswdDto {
     
     @IsNotEmpty({message:'รหัสผ่านห้ามว่าง'})
     @MinLength(5, {each:true, message:'รหัสผ่านต้องมากกว่า $constraint1 ตัวอักษรขึ้นไป'})
-    Password: string;
+    oldPassword: string;
 
     @IsNotEmpty({message:'รหัสผ่านห้ามว่าง'})
     @MinLength(5, {each:true, message:'รหัสผ่านต้องมากกว่า $constraint1 ตัวอักษรขึ้นไป'})
 
-    NewPassword: string;
+    newPassword: string;
 
 
     

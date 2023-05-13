@@ -18,6 +18,12 @@ export class Users {
   @Column({select:false})
   Password: string;
 
+  @Column({select:false})
+  SuPassword: string;
+
+  @Column({default: 'Sale1'})
+  Saleman: string;
+
   @Column({default: 'member'})
   Permission: string;
 
