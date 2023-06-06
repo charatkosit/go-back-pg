@@ -19,6 +19,8 @@ import { ApproveDto } from './dto/ApproveDto';
 import { ForgotPasswordDto } from './dto/ForgotPasswordDto';
 import { SaleMemberListDto } from './dto/SaleMemberListDto';
 import { AdminChangeSuPasswordDto } from './dto/AdminChangeSuPasswordDto';
+import { ChangeEmailDto } from './dto/ChangeEmailDto';
+import { ChangePwdDto } from './dto/ChangePwdDto';
 
 @Controller({
     version: '1',
@@ -80,6 +82,25 @@ export class AuthController {
 
     }
 
+    //localhost:3000/api/v1/auth/userChangeEmail
+    @Post('userChangeEmail')
+    @UseGuards(JwtAuthGuard)
+    userChangeEmail(@Body() changeEmailDto: ChangeEmailDto) {
+        // console.log(approveDto)
+        return this.authService.userChangeEmail(changeEmailDto)
+
+    }
+
+
+    //localhost:3000/api/v1/auth/userChangePwd
+    @Post('userChangePwd')
+    @UseGuards(JwtAuthGuard)
+    userChangePwd(@Body() changePwdDto: ChangePwdDto) {
+        // console.log(approveDto)
+        return this.authService.userChangePwd(changePwdDto)
+
+    }
+
     // localhost:3000/api/v1/auth/register
     @Post('register')
     // @UsePipes(ValidationPipe)
@@ -91,7 +112,7 @@ export class AuthController {
     }
 
 
-    // localhost:3000/api/v1/auth/forgotPassowrd
+    // localhost:3000/api/v1/auth/forgotPassword
     @Post('forgotPassword')
     // @UsePipes(ValidationPipe)
     forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {

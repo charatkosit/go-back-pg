@@ -11,6 +11,8 @@ import { Repository } from 'typeorm';
 import { RegisterDto } from './dto/registerDto';
 import * as speakeasy from 'speakeasy';
 import * as qrcode from 'qrcode';
+import { ChangeEmailDto } from './dto/ChangeEmailDto';
+import { ChangePwdDto } from './dto/ChangePwdDto';
 
 
 @Injectable()
@@ -248,6 +250,54 @@ export class AuthService {
         user.status = registerDto.status;
 
         return await this.usersRepository.save(user)
+    }
+
+    async userChangeEmail(changeEmailDto: ChangeEmailDto) {
+        
+        const {oldEmail , newEmail} = changeEmailDto;
+        const user = await this.usersRepository.findOne({
+            select: ['UserId', 'FullName', 'Password', 'Permission', 'status'],
+            where: { email: oldEmail }
+        })
+
+        if (!user) {
+            throw new NotFoundException('ไม่พบ email ที่ระบุในระบบ')
+        }
+
+
+        await this.usersRepository.update(user.UserId, { email: newEmail })
+        return {
+            "statusCode": 200,
+            "message": "Update new Email OK",
+        }
+    }
+
+    async userChangePwd(changePwdDto: ChangePwdDto) {
+        
+        const {email, oldPassword , newPassword} = changePwdDto;
+        const user = await this.usersRepository.findOne({
+            select: ['UserId', 'FullName', 'Password', 'Permission', 'status'],
+            where: { email: email }
+        })
+
+        if (!user) {
+            throw new NotFoundException('ไม่พบ email ที่ระบุในระบบ')
+        }
+
+
+        // ตรวจสอบว่า password เก่าว่าถูกต้องหรือไม่
+        const isValid = await argon2.verify(user.Password, oldPassword)
+        if (!isValid) {
+            throw new UnauthorizedException('รหัสผ่านไม่ถูกต้อง')
+        }
+
+        // นำรหัสใส่ เข้ารหัส และ save
+        const newPassHash = await argon2.hash(newPassword);
+        console.log(`change Pass:${email}, ${oldPassword}, ${newPassword}, ${newPassHash}`)
+        await this.usersRepository.update(user.UserId, { Password: newPassHash });
+        return { 
+            "statusCode": 200,
+            "message": "new Password Updated OK" }
     }
 
     //------------------------------------------------
