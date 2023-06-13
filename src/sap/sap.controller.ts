@@ -22,7 +22,7 @@ export class SapController {
             token: environment.sapApiToken,
             data: { customer_code: customer_code }
         }
-        // console.log(dataUrl)
+        console.log(dataUrl)
         const url = 'http://192.168.20.17:8880/apigoplus/GetBillTo/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
@@ -37,7 +37,7 @@ export class SapController {
             token: environment.sapApiToken,
             data: { BillToCode: BillToCode }
         }
-        // console.log(dataUrl)
+        console.log(dataUrl)
         const url = 'http://192.168.20.17:8880/apigoplus/GetShipTo/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
@@ -51,7 +51,7 @@ export class SapController {
             token: environment.sapApiToken,
             data: { ShipToCode: ShipToCode }
         }
-        // console.log(dataUrl)
+        console.log(dataUrl)
         const url = 'http://192.168.20.17:8880/apigoplus/GetTransport/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
@@ -65,7 +65,7 @@ export class SapController {
             token: environment.sapApiToken,
             data: { customer_code: customer_code }
         }
-        // console.log(dataUrl)
+        console.log(dataUrl)
         const url = 'http://192.168.20.17:8880/apigoplus/GetInv/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
@@ -83,7 +83,7 @@ export class SapController {
                 doctype: data.doctype
             }
         }
-        // console.log(dataUrl)
+        console.log(dataUrl)
         const url = 'http://192.168.20.17:8880/apigoplus/GetInvDetails/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
@@ -99,13 +99,45 @@ export class SapController {
             token: environment.sapApiToken,
             data: { customer_code: customer_code }
         }
-        // console.log(dataUrl)
+        console.log(dataUrl)
         const url = 'http://192.168.20.17:8880/apigoplus/GetCreditBalance/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
+    //localhost:3000/api/v1/sap/Delivery/
+    @UseGuards(JwtAuthGuard)
+    @Post('Delivery')
+    async Delivery(@Body('customer_code') customer_code: string) {
+        const dataUrl = {
+            token: environment.sapApiToken,
+            data: { customer_code: customer_code }
+        }
+        console.log(dataUrl)
+        const url = 'http://192.168.20.17:8880/apigoplus/GetOpenOrder/';
+        const response = await this.sap.postData(url, dataUrl);
+        return response;
+
+    }
+
+    //localhost:3000/api/v1/sap/DeliveryDetails/
+    @UseGuards(JwtAuthGuard)
+    @Post('DeliveryDetails')
+    async DeliveryDetails(@Body() data: any) {
+        const dataUrl = {
+            token: environment.sapApiToken,
+            data: {
+                customer_code: data.customer_code,
+                orderno: data.orderno
+            }
+        }
+        console.log(dataUrl)
+        const url = 'http://192.168.20.17:8880/apigoplus/GetOpenOrderDetails/';
+        const response = await this.sap.postData(url, dataUrl);
+        return response;
+
+    }
 
     //localhost:3000/api/v1/sap/CusDiscount/
     @UseGuards(JwtAuthGuard)
@@ -113,11 +145,12 @@ export class SapController {
     async CusDiscount(@Body() data: any) {
         const dataUrl = {
             token: environment.sapApiToken,
-            data: { CardCode: data.CardCode,
-                    ItemCode: data.ItemCode
-                  }
+            data: {
+                CardCode: data.CardCode,
+                ItemCode: data.ItemCode
+            }
         }
-        // console.log(dataUrl)
+        console.log(dataUrl)
         const url = 'http://192.168.20.17:8880/apigoplus/GetItemInfo/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
@@ -136,7 +169,7 @@ export class SapController {
                 model: data.model
             }
         }
-        // console.log(dataUrl)
+        console.log(dataUrl)
         const url = 'http://192.168.20.17:8880/apigoplus/EnqPartlist/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
