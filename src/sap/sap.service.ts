@@ -1,30 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosResponse } from 'axios';
+import { lastValueFrom, map } from 'rxjs';
 
 
 @Injectable()
 export class SapService {
- constructor(private http:HttpService ){}
- //แบบที่ 1
-//  async fetchDataFromExternalApi(): Promise<any> {
-//     const response = await fetch('https://fakestoreapi.com/products');
-//     const data = await response.json();
-//     return data;
-//   }
+  constructor(private http: HttpService) {
+     }
+  
+  //แบบที่ 4
 
-//แบบที่2 axios  
-async fetchDataFromExternalApi2(): Promise<AxiosResponse<any>> {
-      return await axios.get('https://fakestoreapi.com/products').then(
-        (res) => {
-            const axiosResponse = res;
-            const responseData = axiosResponse.data;
-            // const responseStaus = axiosResponse.status;
-            // const responseHeader = axiosResponse.headers;
-            return responseData;
-        })
-        .catch((error) => console.error(error));
-    
+  async postData(url: string, data: any): Promise<any> {
+    try {
+      const response = await axios.post(url, data);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Error calling API: ${error.message}`);
+    }
   }
 }
