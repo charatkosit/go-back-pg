@@ -39,6 +39,10 @@ export class UsersService {
     return await this.usersRepository.update(id,updateUserDto)
   }
 
+  async editProfile(id: number, updateUserDto: UpdateUserDto):Promise<UpdateResult> {
+    return await this.usersRepository.update(id,updateUserDto)
+  }
+
   async remove(id: number) :  Promise<DeleteResult> {
     return await this.usersRepository.delete({UserId:id})
 }
