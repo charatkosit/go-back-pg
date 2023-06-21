@@ -27,23 +27,27 @@ export class UsersService {
   }
 
   async findAll() {
-    return await this.usersRepository.find( {select: ['UserId', 'FullName','CodeUserId', 'email', 'Permission','status']})
+    return await this.usersRepository.find({ select: ['UserId', 'FullName', 'CodeUserId', 'email', 'Permission', 'status'] })
   }
 
   async findOne(id: number) {
-      return await this.usersRepository.findOne({where: { UserId: id} })
-      // ถ้าไม่มีรายชื่อ ควรแสดง error ออกไป
+    return await this.usersRepository.findOne({ where: { UserId: id } })
+    // ถ้าไม่มีรายชื่อ ควรแสดง error ออกไป
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto):Promise<UpdateResult> {
-    return await this.usersRepository.update(id,updateUserDto)
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
+    return await this.usersRepository.update(id, updateUserDto)
   }
 
-  async editProfile(id: number, updateUserDto: UpdateUserDto):Promise<UpdateResult> {
-    return await this.usersRepository.update(id,updateUserDto)
+  async editProfile(id: number, updateUserDto: UpdateUserDto): Promise<any> {
+    await this.usersRepository.update(id, updateUserDto)
+    return {
+        "statusCode": 200,
+        "message": "Updated OK"
+        }
   }
 
-  async remove(id: number) :  Promise<DeleteResult> {
-    return await this.usersRepository.delete({UserId:id})
-}
+  async remove(id: number): Promise<DeleteResult> {
+    return await this.usersRepository.delete({ UserId: id })
+  }
 }
