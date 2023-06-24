@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -33,11 +33,19 @@ export class OrdersService {
   }
 
   async findAll(): Promise<Order[]> {
-    return await this.ordersRepository.find({ order: { order_id: 'DESC'}})
+    const data = await this.ordersRepository.find({ order: { order_id: 'DESC'}})
+    if(!data) {
+      throw new NotFoundException('ไม่พบคำที่ค้นหา')
+    }
+    return data;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findOne(id: number) {
+   const data = await this.ordersRepository.findOne({ where: { order_id: id } })
+    if (!data) {
+      throw new NotFoundException('ไม่พบคำที่ค้นหา');
+    }
+    return data;
   }
 
   update(id: number, updateOrderDto: UpdateOrderDto) {

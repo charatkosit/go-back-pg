@@ -33,7 +33,13 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
-  
+  // localhost:3000/api/v1/users/isEmailMember/
+  @Post('isEmailMember')
+  findOneEmail(@Body('email') email: string) {
+    return this.usersService.findOneEmail(email);
+  }
+
+
   // localhost:3000/api/v1/users/editProfile/3   @Patch('editProfile/:id')
   @UseGuards(JwtAuthGuard)
   @Patch('editProfile/:id')

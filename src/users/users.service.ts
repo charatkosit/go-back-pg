@@ -27,12 +27,27 @@ export class UsersService {
   }
 
   async findAll() {
-    return await this.usersRepository.find({ select: ['UserId', 'FullName', 'CodeUserId', 'email', 'Permission', 'status'] })
+    const data = await this.usersRepository.find({ select: ['UserId', 'FullName', 'CodeUserId', 'email', 'Permission', 'status'] })
+    if (!data) {
+      throw new NotFoundException('ไม่พบคำที่ค้นหา');
+    }
+    return data;
   }
 
   async findOne(id: number) {
-    return await this.usersRepository.findOne({ where: { UserId: id } })
-    // ถ้าไม่มีรายชื่อ ควรแสดง error ออกไป
+    const data = await this.usersRepository.findOne({ where: { UserId: id } })
+    if (!data) {
+      throw new NotFoundException('ไม่พบคำที่ค้นหา');
+    }
+    return data;
+  }
+
+  async findOneEmail(email: string) {
+    const data = await this.usersRepository.findOne({ select: ['UserId'], where: { email: email } })
+    if (!data) {
+      throw new NotFoundException('ไม่พบคำที่ค้นหา');
+    }
+    return data;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
@@ -42,9 +57,9 @@ export class UsersService {
   async editProfile(id: number, updateUserDto: UpdateUserDto): Promise<any> {
     await this.usersRepository.update(id, updateUserDto)
     return {
-        "statusCode": 200,
-        "message": "Updated OK"
-        }
+      "statusCode": 200,
+      "message": "Updated OK"
+    }
   }
 
   async remove(id: number): Promise<DeleteResult> {
