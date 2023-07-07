@@ -19,7 +19,7 @@ services:
             - /usr/src/app/node_modules
         restart: unless-stopped
     prod:
-        container_name: go-back-prod-x
+        container_name: go-back-yyy
         image: go-back-xxx:latest
         build:
             context: .
