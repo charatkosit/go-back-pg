@@ -14,8 +14,9 @@ export class SapService {
 
   //แบบที่ 4
 
-  async postData(url: string, data: any): Promise<any> {
+  async postData(preurl: string, data: any): Promise<any> {
     try {
+      const url = 'http://192.168.20.17:8880/' + preurl;
       const response = await this.http.post(url, data).toPromise();
       return response.data;
     } catch (error) {

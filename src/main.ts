@@ -15,7 +15,7 @@ async function bootstrap() {
   app.enableCors();
   // app.enableCors({
   //   origin: ['http://172.41.62.164:3000', 'http://172.41.60.18:3000'],
-  //   methods: ['GET', 'POST'],
+  //   methods: ['GET', 'POST' ,'HEAD', 'PUT', 'PATCH','DELETE'],
   //   credentials: false,
   // });
   await app.listen(3000);

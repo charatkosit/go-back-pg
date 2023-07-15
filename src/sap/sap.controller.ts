@@ -17,7 +17,7 @@ export class SapController {
     constructor(private sap: SapService) { }
 
     //localhost:3000/api/v1/sap/BillTo/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('BillTo')
     @HttpCode(200)
     async billTo(@Body('customer_code') customer_code: string) {
@@ -26,14 +26,14 @@ export class SapController {
             data: { customer_code: customer_code }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetBillTo/';
+        const url = 'apigoplus/GetBillTo/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/Shipto/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('ShipTo')
     @HttpCode(200)
     async shipToData(@Body('BillToCode') BillToCode: string) {
@@ -42,14 +42,14 @@ export class SapController {
             data: { BillToCode: BillToCode }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetShipTo/';
+        const url = 'apigoplus/GetShipTo/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/Transport/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('Transport')
     @HttpCode(200)
     async Transport(@Body('ShipToCode') ShipToCode: string) {
@@ -58,14 +58,14 @@ export class SapController {
             data: { ShipToCode: ShipToCode }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetTransport/';
+        const url = 'apigoplus/GetTransport/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/Invoice/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('Invoice')
     @HttpCode(200)
     async Invoice(@Body('customer_code') customer_code: string) {
@@ -74,14 +74,16 @@ export class SapController {
             data: { customer_code: customer_code }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetInv/';
+        // const url = 'http://192.168.20.17:8880/apigoplus/GetInv/';
+        const url = 'apigoplus/GetInv/';
+
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/InvoiceDetails/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('InvoiceDetails')
     @HttpCode(200)
     async InvoiceDetails(@Body() data: any) {
@@ -94,14 +96,14 @@ export class SapController {
             }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetInvDetails/';
+        const url = 'apigoplus/GetInvDetails/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/CreditBalance/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('CreditBalance')
     @HttpCode(200)
     async CreditBalance(@Body('customer_code') customer_code: string) {
@@ -110,14 +112,14 @@ export class SapController {
             data: { customer_code: customer_code }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetCreditBalance/';
+        const url = 'apigoplus/GetCreditBalance/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/Delivery/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('Delivery')
     @HttpCode(200)
     async Delivery(@Body('customer_code') customer_code: string) {
@@ -126,14 +128,14 @@ export class SapController {
             data: { customer_code: customer_code }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetOpenOrder/';
+        const url = 'apigoplus/GetOpenOrder/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/DeliveryDetails/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('DeliveryDetails')
     @HttpCode(200)
     async DeliveryDetails(@Body() data: any) {
@@ -145,14 +147,14 @@ export class SapController {
             }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetOpenOrderDetails/';
+        const url = 'apigoplus/GetOpenOrderDetails/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/CusDiscount/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('CusDiscount')
     @HttpCode(200)
     async CusDiscount(@Body() data: any) {
@@ -164,14 +166,14 @@ export class SapController {
             }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetItemInfo/';
+        const url = 'apigoplus/GetItemInfo/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
     }
 
     //localhost:3000/api/v1/sap/searchPartlist/
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('searchPartlist')
     @HttpCode(200)
     async searchPartlist(@Body() data: any) {
@@ -185,7 +187,7 @@ export class SapController {
             }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/EnqPartlist/';
+        const url = 'apigoplus/EnqPartlist/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
 
@@ -194,7 +196,7 @@ export class SapController {
 
     //****************************
     //localhost:3000/api/v1/sap/bulkInvoice/   ดึงทั้ง INV และ CN
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Post('bulkInvoice')
     @HttpCode(200)
     async bulkInvoice(@Body('customer_code') customer_code: string) {
@@ -203,7 +205,7 @@ export class SapController {
             data: { customer_code: customer_code }
         }
         console.log(dataUrl)
-        const url = 'http://192.168.20.17:8880/apigoplus/GetInv/';
+        const url = 'apigoplus/GetInv/';
         const initialData = await this.sap.postData(url, dataUrl);
         const dataFullTax = initialData.data.map(item => ({a:item.FullTaxNumber,b:item.DocType,c:customer_code}));
         const result = await this.sap.fetchAllData(dataFullTax);
