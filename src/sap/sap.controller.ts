@@ -65,7 +65,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/Invoice/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('Invoice')
     @HttpCode(200)
     async Invoice(@Body('customer_code') customer_code: string) {
