@@ -17,7 +17,7 @@ export class SapController {
     constructor(private sap: SapService) { }
 
     //localhost:3000/api/v1/sap/BillTo/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('BillTo')
     @HttpCode(200)
     async billTo(@Body('customer_code') customer_code: string) {
@@ -33,7 +33,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/Shipto/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('ShipTo')
     @HttpCode(200)
     async shipToData(@Body('BillToCode') BillToCode: string) {
@@ -49,7 +49,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/Transport/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('Transport')
     @HttpCode(200)
     async Transport(@Body('ShipToCode') ShipToCode: string) {
@@ -83,7 +83,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/InvoiceDetails/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('InvoiceDetails')
     @HttpCode(200)
     async InvoiceDetails(@Body() data: any) {
@@ -103,7 +103,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/CreditBalance/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('CreditBalance')
     @HttpCode(200)
     async CreditBalance(@Body('customer_code') customer_code: string) {
@@ -119,7 +119,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/Delivery/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('Delivery')
     @HttpCode(200)
     async Delivery(@Body('customer_code') customer_code: string) {
@@ -135,7 +135,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/DeliveryDetails/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('DeliveryDetails')
     @HttpCode(200)
     async DeliveryDetails(@Body() data: any) {
@@ -154,7 +154,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/CusDiscount/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('CusDiscount')
     @HttpCode(200)
     async CusDiscount(@Body() data: any) {
@@ -173,7 +173,7 @@ export class SapController {
     }
 
     //localhost:3000/api/v1/sap/searchPartlist/
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('searchPartlist')
     @HttpCode(200)
     async searchPartlist(@Body() data: any) {
@@ -196,7 +196,7 @@ export class SapController {
 
     //****************************
     //localhost:3000/api/v1/sap/bulkInvoice/   ดึงทั้ง INV และ CN
-    // @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Post('bulkInvoice')
     @HttpCode(200)
     async bulkInvoice(@Body('customer_code') customer_code: string) {
