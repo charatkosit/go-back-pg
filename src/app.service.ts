@@ -17,7 +17,6 @@ export interface Envs {
   dbPassword: string;
   dbName: string;
   synchronize: boolean;
-  sapUrl: string;
   sapApiToken: string;
   baseUrl: string;
   project: string;
@@ -28,14 +27,6 @@ export interface Envs {
 @Injectable()
 export class AppService {
 
- 
-  private movies: Movie[] = [
-    { id: 1, name: 'Star Wars: The Force Awakens', year: 2015 },
-    { id: 2, name: 'Star Wars: The Last Jedi', year: 2017 },
-    { id: 3, name: 'Star Wars: The Rise of Skywalker', year: 2019 },
-  ];
-
-
   private envStatus: Envs[] = [
     {
       production: environment.production,
@@ -45,16 +36,12 @@ export class AppService {
       dbPassword: environment.dbPassword,
       dbName: environment.dbName,
       synchronize: environment.synchronize,
-      sapUrl: environment.sapUrl,
       sapApiToken: environment.sapApiToken,
       baseUrl: environment.baseUrl,
       project: environment.project,
       release: environment.release,
     }
   ]
-  getMovies(): Movie[] {
-    return this.movies;
-  }
 
   getenvStatus(): Envs[] {
     return this.envStatus;

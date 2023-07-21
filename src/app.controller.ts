@@ -12,12 +12,6 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  // getMovies(): Movie[] {
-  //   return this.appService.getMovies();
-  // }
-
-
-
   getenvStatus() {
     const data = this.appService.getenvStatus();
     const counter:number = Object.keys(data).length
