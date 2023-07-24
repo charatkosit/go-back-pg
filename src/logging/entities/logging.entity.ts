@@ -5,6 +5,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Logging {
     @PrimaryGeneratedColumn()
     Log_Id: number;
+
+    @Column()
+    Log_By: string;
   
     @Column()
     Log_Path: string;
@@ -16,5 +19,5 @@ export class Logging {
     Log_Body: string;
   
     @Column()
-    Log_Timestamp: number;
+    Log_Timestamp: string;
 }

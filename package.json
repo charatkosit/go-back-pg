@@ -1,6 +1,6 @@
 {
   "name": "go-back",
-  "version": "0.1.35",
+  "version": "0.1.36",
   "description": "",
   "author": "",
   "private": true,
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@nestjs/axios": "^2.0.0",
-    "@nestjs/common": "^9.0.0",
+    "@nestjs/common": "^9.4.3",
     "@nestjs/core": "^9.0.0",
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/mapped-types": "*",
@@ -45,7 +45,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.7",
     "speakeasy": "^2.0.0",
-    "typeorm": "^0.3.10"
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

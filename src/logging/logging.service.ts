@@ -18,9 +18,9 @@ export class LoggingService {
   async create(createLoggingDto: CreateLoggingDto) {
     const logging = new Logging();
     logging.Log_Path = createLoggingDto.Log_Path;
-    logging.Log_Method = createLoggingDto.Log_Method;
-    logging.Log_Body = createLoggingDto.Log_Body;
-    logging.Log_Timestamp = createLoggingDto.Log_Timestamp;
+    // logging.Log_Method = createLoggingDto.Log_Method;
+    // logging.Log_Body = createLoggingDto.Log_Body;
+    // logging.Log_Timestamp = createLoggingDto.Log_Timestamp;
 
     return await this.loggingRepository.save(logging);
   }
@@ -39,5 +39,12 @@ export class LoggingService {
 
   remove(id: number) {
     return `This action removes a #${id} logging`;
+  }
+
+  formatTimestamp(timestamp: number): string {
+    const date = new Date(timestamp);
+    const day = date.toLocaleDateString();
+    const time = date.toLocaleTimeString();
+    return `${day} ${time}`;
   }
 }
