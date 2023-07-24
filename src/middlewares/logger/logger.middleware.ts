@@ -38,7 +38,8 @@ export class LoggerMiddleware implements NestMiddleware {
          Log_Method: method,
          Log_Body: body ,
          Log_Timestamp: timestamp})
+  next();
+    
   }
 
-  
 }
