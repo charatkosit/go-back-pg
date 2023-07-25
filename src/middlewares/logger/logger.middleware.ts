@@ -15,25 +15,29 @@ export class LoggerMiddleware implements NestMiddleware {
     private readonly loggingRepository: Repository<Logging>,
     private loggingService: LoggingService,
   ) {}
-
+ 
+  byUser = ''; 
 
  async use(req: any, res: any, next: (error?: any) => void) {
     console.log(`body is: ${JSON.stringify(req.body)}`);
-    console.log(`path is: ${req.path}`);
     console.log(`params is: ${JSON.stringify(req.params['0'])}`);
     console.log(`method is: ${req.method}`)
-    // req.timestamp = Date.now();
-    // console.log(`timestamp is: ${req.timestamp}`)
-    // console.log(req.headers['authorization'].replace('Bearer ',''))
 
+    //กรณี Get method จะไม่มี Header มา
+    // console.log(req.headers['authorization'])
+    if (req.headers['authorization'] != null){
+       this.byUser = `${req.headers['authorization'].replace('Bearer ','')}`;
+    } else {
+       this.byUser = 'System'
+    }
 
-    const byUser = `${req.headers['authorization'].replace('Bearer ','')}`;
+    
     const path = JSON.stringify(req.params['0']);
     const method = `${req.method}`
     const body = JSON.stringify(req.body)
     const timestamp = this.loggingService.formatTimestamp(Date.now())
     await this.loggingRepository.save({
-         Log_By : byUser,
+         Log_By : this.byUser,
          Log_Path:  path,
          Log_Method: method,
          Log_Body: body ,
