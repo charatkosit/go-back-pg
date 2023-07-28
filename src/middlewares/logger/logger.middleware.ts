@@ -21,7 +21,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
   byUser = '';
   //UTC บน NB กับบน EC2 ไม่ตรงกันบน EC2 ต้องตั้ง UTC_OFFSET=7
-  utcOffset:any = process.env.UTC_OFFSET || 0;
+  utcOffset:any = process.env.UTC_OFFSET || 7;
   
  
   async use(req: any, res: any, next: (error?: any) => void) {
