@@ -20,6 +20,9 @@ export class LoggerMiddleware implements NestMiddleware {
   ) { }
 
   byUser = '';
+  //UTC บน NB กับบน EC2 ไม่ตรงกันบน EC2 ต้องตั้ง UTC_OFFSET=7
+  utcOffset:any = process.env.UTC_OFFSET || 0;
+  
  
   async use(req: any, res: any, next: (error?: any) => void) {
     console.log(`body is: ${JSON.stringify(req.body)}`);
@@ -52,9 +55,9 @@ export class LoggerMiddleware implements NestMiddleware {
     const path = JSON.stringify(req.params['0']);
     const method = `${req.method}`
     const body = JSON.stringify(req.body)
-    const timestamp = this.loggingService.formatTimestamp(Date.now())
+    const timestamp = this.loggingService.formatTimestamp(Date.now() + this.utcOffset * 60 * 60 * 1000)
     // const timestamp:string = toString(Date.now()); 
-
+    console.log(`utc=${this.utcOffset}`)
     console.log(timestamp)
     
     await this.loggingRepository.save({
