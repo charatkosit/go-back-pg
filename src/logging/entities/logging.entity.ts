@@ -19,5 +19,5 @@ export class Logging {
     Log_Body: string;
   
     @Column()
-    Log_Timestamp: string;
+    Log_Timestamp: number;
 }
