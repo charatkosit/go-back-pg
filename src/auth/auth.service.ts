@@ -319,7 +319,9 @@ export class AuthService {
         return isValid;
     }
 
-
+    decoder(token:string){
+        return this.jwtService.decode(token)
+    }
 
     generateQRCode(secret: string, username: string): Promise<string> {
         return new Promise((resolve, reject) => {

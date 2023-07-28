@@ -17,6 +17,7 @@ import { LoggingModule } from './logging/logging.module';
 import { LoggingService } from './logging/logging.service';
 import { LoggingRepository } from './logging/logging.repository';
 import { Logging } from './logging/entities/logging.entity';
+// import { DecodeJwtMiddleware } from './decode-jwt.middleware'
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { Logging } from './logging/entities/logging.entity';
   controllers: [AppController],
   providers: [AppService,
     // HttpService
+
     LoggingService,
     LoggingRepository,
 
@@ -45,10 +47,9 @@ export class AppModule implements NestModule {
     consumer
       .apply(LoggerMiddleware)
       .forRoutes('*'); // ให้ Middleware ทำงานกับทุก Route
+    // consumer
+    //   .apply(DecodeJwtMiddleware)
+    //   .forRoutes('*');
   }
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer
-  //     .apply(LoggerMiddleware)
-  //     .forRoutes({ path: '*', method: RequestMethod.ALL });
-  // }
+
 }
