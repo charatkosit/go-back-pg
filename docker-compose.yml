@@ -23,6 +23,8 @@ services:
     prod:
         container_name: go-back-yyy
         image: go-back-xxx:latest
+        environment:
+            UTC_OFFSET: 7
         build:
             context: .
             target: production
