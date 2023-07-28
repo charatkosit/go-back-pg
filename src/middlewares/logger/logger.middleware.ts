@@ -52,8 +52,8 @@ export class LoggerMiddleware implements NestMiddleware {
     const path = JSON.stringify(req.params['0']);
     const method = `${req.method}`
     const body = JSON.stringify(req.body)
-    // const timestamp = this.loggingService.formatTimestamp(Date.now())
-    const timestamp:number = Date.now(); 
+    const timestamp = this.loggingService.formatTimestamp(Date.now())
+    // const timestamp:string = toString(Date.now()); 
 
     console.log(timestamp)
     
