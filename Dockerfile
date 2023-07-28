@@ -16,6 +16,7 @@ FROM node:18.16.0-alpine as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
+ENV UTC_OFFSET=7
 
 WORKDIR /usr/src/app
 

@@ -4,8 +4,6 @@ services:
     dev:
         container_name: go-back-dev
         image: go-back-dev:latest
-        environment:
-            UTC_OFFSET: 7
         build:
             context: .
             target: development
@@ -23,8 +21,6 @@ services:
     prod:
         container_name: go-back-yyy
         image: go-back-xxx:latest
-        environment:
-            UTC_OFFSET: 7
         build:
             context: .
             target: production
