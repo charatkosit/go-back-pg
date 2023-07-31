@@ -61,10 +61,10 @@ export class LoggerMiddleware implements NestMiddleware {
     console.log(timestamp)
     
     await this.loggingRepository.save({
-      Log_By: this.byUser,
       Log_Path: path,
       Log_Method: method,
       Log_Body: body,
+      Log_By: this.byUser,
       Log_Timestamp: timestamp
     })
     next();

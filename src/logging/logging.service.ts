@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { CreateLoggingDto } from './dto/create-logging.dto';
 import { UpdateLoggingDto } from './dto/update-logging.dto';
 import { Logging } from './entities/logging.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -57,5 +58,37 @@ export class LoggingService {
     const seconds = date.getSeconds().toString().padStart(2, '0');
     
     return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+  }
+
+  async findAllWithPagination(page: number = 1, page_size: number = 20, searchPath: string, searchBody: string, searchTime: string, searchUser: string): Promise<any> {
+
+    const result = await this.loggingRepository.find({
+      where: {
+        Log_Path:      Like('%' + searchPath + '%'),
+        Log_Body:      Like('%' + searchBody + '%'),
+        Log_Timestamp: Like('%' + searchTime + '%'),
+        Log_By:        Like('%' + searchUser + '%'),
+
+      },
+      order: { Log_Id: 'DESC' },
+      skip: (page - 1) * page_size,
+      take: page_size,
+
+
+    })
+    return result
+
+  }
+
+  async total(searchPath: string, searchBody: string, searchUser: string,  searchTime: string): Promise<any> {
+    const sql = `SELECT COUNT(*) AS total  from logging where 
+        Log_Path LIKE '%${searchPath}%'
+    AND Log_Body LIKE '%${searchBody}%'
+    AND Log_By LIKE '%${searchUser}%'
+    AND Log_Timestamp LIKE '%${searchTime}%'`
+
+    const total = await this.loggingRepository.query(sql);
+
+    return total
   }
 }
