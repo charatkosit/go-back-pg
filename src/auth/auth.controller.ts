@@ -53,110 +53,22 @@ export class AuthController {
         // return { backRev : '0.1.12'}
     }
 
-    //localhost:3000/api/v1/auth/login
-    @Post('login')
-    // @UsePipes(ValidationPipe)
-    @HttpCode(200)
-    login(@Body() loginDto: LoginDto) {
-        // console.log(loginDto)
-        return this.authService.login(loginDto.email, loginDto.password)
-
-    }
-
-    //localhost:3000/api/v1/auth/suLogin
-    @Post('suLogin')
-    // @UsePipes(ValidationPipe)
-    @HttpCode(200)
-    suLogin(@Body() suLoginDto: SuLoginDto) {
-        //  console.log(suLoginDto)
-        return this.authService.suLogin(suLoginDto.email, suLoginDto.suPassword)
-
-    }
-
-    //localhost:3000/api/v1/auth/approve + with token access
-    @Post('approve')
-    @UseGuards(JwtAuthGuard)
-    approve(@Body() approveDto: ApproveDto) {
-        // console.log(approveDto)
-        return this.authService.approve(approveDto.email)
-
-    }
-
-    //localhost:3000/api/v1/auth/userChangeEmail
-    @Post('userChangeEmail')
-    @UseGuards(JwtAuthGuard)
-    userChangeEmail(@Body() changeEmailDto: ChangeEmailDto) {
-        // console.log(approveDto)
-        return this.authService.userChangeEmail(changeEmailDto)
-
-    }
-
-
-    //localhost:3000/api/v1/auth/userChangePwd
-    @Post('userChangePwd')
-    @UseGuards(JwtAuthGuard)
-    userChangePwd(@Body() changePwdDto: ChangePwdDto) {
-        // console.log(approveDto)
-        return this.authService.userChangePwd(changePwdDto)
-
-    }
-
-    // localhost:3000/api/v1/auth/register
-    @Post('register')
-    // @UsePipes(ValidationPipe)
-    register(@Body() registerDto: RegisterDto) {
-        const { FullName, CodeUserId, Email,
-            Password, Permission } = registerDto;
-        console.log(`${FullName}, ${CodeUserId}, ${Email}, ${Password}, ${Permission}`)
-        return this.authService.register(registerDto)
-    }
-
-
-    // localhost:3000/api/v1/auth/forgotPassword
-    @Post('forgotPassword')
-    // @UsePipes(ValidationPipe)
-    forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
-        const { email } = forgotPasswordDto;
-        // console.log(`${email}`)
-        return this.authService.forgotPassword(email)
-    }
 
     // localhost:3000/api/v1/auth/profiles  + with token access
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     @Get('profile')
     getProfile(@Req() req: any) {
-        console.log(req)
-        return req.user;
+        console.log(JSON.stringify(req.user))
+        return 'hello';
     }
 
+    // localhost:3000/api/v1/auth/fullname  + with token access
+    // @UseGuards(JwtAuthGuard)
+    @Get('fullname')
+    getFullname(@Body('id') id: number) {
+        // console.log()
+        return this.authService.fullname(id);
 
-    // localhost:3000/api/v1/auth/userChangePassword
-    @Patch('changePassword')
-    // @UsePipes(ValidationPipe)
-    userChangePasswd(@Body() changePasswordDto: ChangePasswordDto) {
-        const { Token, Email, oldPassword, newPassword } = changePasswordDto;
-        console.log(`${Token}, ${Email}, ${oldPassword}`)
-        return this.authService.userChangePassword(Email, oldPassword, newPassword)
-    }
-
-
-    // localhost:3000/api/v1/auth/adminChangePassword
-    @Patch('adminChangePassword')
-    // @UsePipes(ValidationPipe)
-    adminChangePassword(@Body() adminChangePasswordDto: AdminChangePasswordDto) {
-        const { Email, newPassword } = adminChangePasswordDto;
-        console.log(`${Email} , ${newPassword}`)
-        return this.authService.adminChangePassword(Email, newPassword)
-    }
-
-
-    // localhost:3000/api/v1/auth/adminChangeSuPassword
-    @Patch('adminChangeSuPassword')
-    // @UsePipes(ValidationPipe)
-    adminChangeSuPassword(@Body() adminChangeSuPasswordDto: AdminChangeSuPasswordDto) {
-        const { Email, newSuPassword } = adminChangeSuPasswordDto;
-        console.log(`${Email} , ${newSuPassword}`)
-        return this.authService.adminChangeSuPassword(Email, newSuPassword)
     }
 }
 

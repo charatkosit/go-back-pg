@@ -41,7 +41,8 @@ export class LoggerMiddleware implements NestMiddleware {
           // console.log(`jwtToken=${token}`)
           const decodedPayload:any = jwtDecoder(token)
           console.log(decodedPayload.userId);
-          this.byUser = decodedPayload.userId
+          this.byUser = decodedPayload.fullname
+          // นำ userId ไปหาชื่อเพื่อบันทึกใน log
         } catch (error) {
           console.error('เกิดข้อผิดพลาดในการถอดรหัส JWT:', error.message);
         }
