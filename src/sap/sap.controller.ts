@@ -96,6 +96,7 @@ export class SapController {
             }
         }
         console.log(dataUrl)
+        // const url = 'http://192.168.20.17:8880/apigoplus/GetInvDetails/';
         const url = 'apigoplus/GetInvDetails/';
         const response = await this.sap.postData(url, dataUrl);
         return response;
@@ -192,6 +193,25 @@ export class SapController {
         return response;
 
     }
+
+     //localhost:3000/api/v1/sap/getStockOnHand/
+     @UseGuards(JwtAuthGuard)
+     @Post('getStockOnHand')
+     @HttpCode(200)
+     async getStockOnHand(@Body() data: any) {
+         const dataUrl = {
+             token: environment.sapApiToken,
+             data:[
+                { ItemCode : data.ItemCode },
+            ]
+         }
+         console.log(dataUrl)
+         // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
+         const url = 'apigoplus/GetStockOnHand/';
+         const response = await this.sap.postData(url, dataUrl);
+         return response;
+ 
+     }
 
 
     //****************************
