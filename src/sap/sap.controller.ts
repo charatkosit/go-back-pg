@@ -219,6 +219,28 @@ export class SapController {
  
      }
 
+     //localhost:3000/api/v1/sap/getBulkStockOnHand/
+     @UseGuards(JwtAuthGuard)
+     @Post('getBulkStockOnHand')
+     @HttpCode(200)
+     async getBulkStockOnHand(@Body() data: string[]) {
+         const body = {
+             token: environment.sapApiToken,
+             data: data.map(item => ({ ItemCode : item }))
+            
+         }
+         const headers ={
+            'Content-Type': 'application/json',
+          };
+      
+         console.log(`body: ${body}`)
+         // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
+         const url = 'apigoplus/GetStockOnHand/';
+         const response = await this.sap.postData2(url, body,{headers}).pipe(
+             map( (response) => response.data )).toPromise();
+         return response;
+ 
+     }
 
     //****************************
     //localhost:3000/api/v1/sap/bulkInvoice/   ดึงทั้ง INV และ CN
