@@ -224,6 +224,7 @@ export class SapController {
     @Post('getBulkStockOnHand')
     @HttpCode(200)
     getBulkStockOnHand(@Body() data: string[]) {
+
         const body = {
             token: environment.sapApiToken,
             data: data.map(item => ({ ItemCode: item }))
@@ -233,11 +234,12 @@ export class SapController {
             'Content-Type': 'application/json',
         };
 
-        console.log(`body: ${body}`)
+        console.log(`getBulkStockOnHand body: ${JSON.stringify(body)}`)
         // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
         const url = 'apigoplus/GetStockOnHand/';
         const response = this.sap.postData2(url, body, { headers })
          return response;
+    
 
     }
 
