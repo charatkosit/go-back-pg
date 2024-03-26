@@ -8,6 +8,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { urlencoded } from 'express';
 import { cursorTo } from 'readline';
 import { ApiBulkDetails } from 'src/interfaces/ApiBulkDetails';
+import { map } from 'rxjs/operators';
 
 @Controller({
     version: '1',
@@ -199,16 +200,21 @@ export class SapController {
      @Post('getStockOnHand')
      @HttpCode(200)
      async getStockOnHand(@Body() data: any) {
-         const dataUrl = {
+         const body = {
              token: environment.sapApiToken,
              data:[
                 { ItemCode : data.ItemCode },
             ]
          }
-         console.log(dataUrl)
+         const headers ={
+            'Content-Type': 'application/json',
+          };
+      
+         console.log(body)
          // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
          const url = 'apigoplus/GetStockOnHand/';
-         const response = await this.sap.postData(url, dataUrl);
+         const response = await this.sap.postData2(url, body,{headers}).pipe(
+             map( (response) => response.data )).toPromise();
          return response;
  
      }
