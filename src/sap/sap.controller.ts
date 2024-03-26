@@ -9,6 +9,7 @@ import { urlencoded } from 'express';
 import { cursorTo } from 'readline';
 import { ApiBulkDetails } from 'src/interfaces/ApiBulkDetails';
 import { map } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
 
 @Controller({
     version: '1',
@@ -195,52 +196,54 @@ export class SapController {
 
     }
 
-     //localhost:3000/api/v1/sap/getStockOnHand/
-     @UseGuards(JwtAuthGuard)
-     @Post('getStockOnHand')
-     @HttpCode(200)
-     async getStockOnHand(@Body() data: any) {
-         const body = {
-             token: environment.sapApiToken,
-             data:[
-                { ItemCode : data.ItemCode },
+    //localhost:3000/api/v1/sap/getStockOnHand/
+    @UseGuards(JwtAuthGuard)
+    @Post('getStockOnHand')
+    @HttpCode(200)
+    async getStockOnHand(@Body() data: any) {
+        const body = {
+            token: environment.sapApiToken,
+            data: [
+                { ItemCode: data.ItemCode },
             ]
-         }
-         const headers ={
+        }
+        const headers = {
             'Content-Type': 'application/json',
-          };
-      
-         console.log(body)
-         // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
-         const url = 'apigoplus/GetStockOnHand/';
-         const response = await this.sap.postData2(url, body,{headers}).pipe(
-             map( (response) => response.data )).toPromise();
-         return response;
- 
-     }
+        };
 
-     //localhost:3000/api/v1/sap/getBulkStockOnHand/
-     @UseGuards(JwtAuthGuard)
-     @Post('getBulkStockOnHand')
-     @HttpCode(200)
-     async getBulkStockOnHand(@Body() data: string[]) {
-         const body = {
-             token: environment.sapApiToken,
-             data: data.map(item => ({ ItemCode : item }))
-            
-         }
-         const headers ={
+        console.log(body)
+        // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
+        const url = 'apigoplus/GetStockOnHand/';
+        const response = await this.sap.postData2(url, body, { headers })
+        // const response = await firstValueFrom(response$.pipe(
+        //     map((response) => response.data)
+        // ));
+        return response;
+
+    }
+
+    //localhost:3000/api/v1/sap/getBulkStockOnHand/
+    @UseGuards(JwtAuthGuard)
+    @Post('getBulkStockOnHand')
+    @HttpCode(200)
+    async getBulkStockOnHand(@Body() data: string[]) {
+        const body = {
+            token: environment.sapApiToken,
+            data: data.map(item => ({ ItemCode: item }))
+
+        }
+        const headers = {
             'Content-Type': 'application/json',
-          };
-      
-         console.log(`body: ${body}`)
-         // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
-         const url = 'apigoplus/GetStockOnHand/';
-         const response = await this.sap.postData2(url, body,{headers}).pipe(
-             map( (response) => response.data )).toPromise();
-         return response;
- 
-     }
+        };
+
+        console.log(`body: ${body}`)
+        // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
+        const url = 'apigoplus/GetStockOnHand/';
+        const response = await this.sap.postData2(url, body, { headers }).pipe(
+            map((response) => response.data)).toPromise();
+        return response;
+
+    }
 
     //****************************
     //localhost:3000/api/v1/sap/bulkInvoice/   ดึงทั้ง INV และ CN
@@ -255,12 +258,12 @@ export class SapController {
         console.log(dataUrl)
         const url = 'apigoplus/GetInv/';
         const initialData = await this.sap.postData(url, dataUrl);
-        const dataFullTax = initialData.data.map(item => ({a:item.FullTaxNumber,b:item.DocType,c:customer_code}));
+        const dataFullTax = initialData.data.map(item => ({ a: item.FullTaxNumber, b: item.DocType, c: customer_code }));
         const result = await this.sap.fetchAllData(dataFullTax);
         const finalResult = await result.flat();
         // console.log(dataFullTax)
-         return finalResult
- 
+        return finalResult
+
 
     }
 
