@@ -24,5 +24,14 @@ export class Product {
   @Column()
   RetailPrice: number;
 
+  @Column()
+  Qty: number;
+  
+  @Column()
+  Grade3D: string;
+
+  @Column()
+  TimeStamp: string;
+
 
 }
