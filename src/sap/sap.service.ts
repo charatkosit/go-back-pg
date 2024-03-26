@@ -12,8 +12,7 @@ export class SapService {
   constructor(private http: HttpService) {
   }
 
-  //แบบที่ 4
-
+  //แบบ Promise
   async postData(preurl: string, data: any): Promise<any> {
     try {
       const url = 'http://192.168.20.17:8880/' + preurl;

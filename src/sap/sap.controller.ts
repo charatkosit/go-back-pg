@@ -200,7 +200,7 @@ export class SapController {
     @UseGuards(JwtAuthGuard)
     @Post('getStockOnHand')
     @HttpCode(200)
-    async getStockOnHand(@Body() data: any) {
+    getStockOnHand(@Body() data: any) {
         const body = {
             token: environment.sapApiToken,
             data: [
@@ -214,10 +214,7 @@ export class SapController {
         console.log(body)
         // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
         const url = 'apigoplus/GetStockOnHand/';
-        const response = await this.sap.postData2(url, body, { headers })
-        // const response = await firstValueFrom(response$.pipe(
-        //     map((response) => response.data)
-        // ));
+        const response = this.sap.postData2(url, body, { headers })
         return response;
 
     }
@@ -226,7 +223,7 @@ export class SapController {
     @UseGuards(JwtAuthGuard)
     @Post('getBulkStockOnHand')
     @HttpCode(200)
-    async getBulkStockOnHand(@Body() data: string[]) {
+    getBulkStockOnHand(@Body() data: string[]) {
         const body = {
             token: environment.sapApiToken,
             data: data.map(item => ({ ItemCode: item }))
@@ -239,9 +236,8 @@ export class SapController {
         console.log(`body: ${body}`)
         // const url = 'http://192.168.20.17:8880/apigoplus/GetStockOnHand/';
         const url = 'apigoplus/GetStockOnHand/';
-        const response = await this.sap.postData2(url, body, { headers }).pipe(
-            map((response) => response.data)).toPromise();
-        return response;
+        const response = this.sap.postData2(url, body, { headers })
+         return response;
 
     }
 
