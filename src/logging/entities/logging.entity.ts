@@ -13,7 +13,7 @@ export class Logging {
     @Column()
     Log_Method: string;
   
-    @Column()
+    @Column('text')
     Log_Body: string;
 
     @Column()

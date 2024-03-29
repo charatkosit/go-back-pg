@@ -7,6 +7,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Pagination } from 'src/interfaces/Pagination';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ProductInfoDTO } from './dto/ProductInfo.dto';
+import { ProductBulkInfoDTO } from './dto/ProductBulkInfo.dto';
 
 // @UseGuards(JwtAuthGuard)
 @Controller({
@@ -120,5 +122,20 @@ export class ProductsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);
+  }
+
+  @Post('/update')
+  async updateOne(@Body() productInfoDTO: ProductInfoDTO) {
+    return await this.productsService.updateOneProduct(productInfoDTO);
+  }
+
+  @Post('/updatebulk')
+  async updateBulk(@Body() productBulkInfoDTO: ProductBulkInfoDTO[]) {
+    //นำข้อมูลที่ได้มาวน loop แล้วเรียกใช้ function updateOneProduct ทีละ record
+    for (let i = 0; i < productBulkInfoDTO.length; i++) {
+      await this.productsService.updateOneProduct(productBulkInfoDTO[i]);
+    }
+    return `Update ${productBulkInfoDTO.length} records successfully`;
+   
   }
 }

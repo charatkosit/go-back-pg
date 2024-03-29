@@ -11,6 +11,7 @@ import { Product } from './entities/product.entity';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom, lastValueFrom, map } from 'rxjs';
 import { AxiosRequestConfig } from 'src/interfaces/AxiosRequestConfig';
+import { ProductInfoDTO } from './dto/ProductInfo.dto';
 
 @Injectable()
 
@@ -25,14 +26,6 @@ export class ProductsService {
   ) { }
 
 
-  async getBill() {
-    // const url = environment.sapUrl;
-    const url = 'http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json'
-
-    const { data } = await firstValueFrom(this.httpService.get(url));
-
-    return data
-  }
 
   async getBillTo() {
     const requestConfig = {
@@ -110,7 +103,7 @@ export class ProductsService {
 
   }
 
-  async total(brand: string, itemName: string, itemCode: string,  model: string): Promise<any> {
+  async total(brand: string, itemName: string, itemCode: string, model: string): Promise<any> {
     const sql = `SELECT COUNT(*) AS total  from product where Brand LIKE '%${brand}%'
     AND ItemName LIKE '%${itemName}%'
     AND ItemCode LIKE '%${itemCode}%'
@@ -131,5 +124,31 @@ export class ProductsService {
 
   remove(id: number) {
     return `This action removes a #${id} product`;
+  }
+
+ async updateOneProduct(product: ProductInfoDTO): Promise<any> {
+    const sql = `UPDATE product SET 
+    RetailPrice = ${product.RetailPrice},
+    Qty = ${product.Stock},
+    Grade3D = '${product.Grade3D}',
+    TimeStamp = '${product.DataDate}'
+    WHERE ItemCode = '${product.ItemCode}'`;
+
+    // return console.log(sql);
+    return await this.productsRepository.query(sql);
+  }
+
+  async updateBulkProducts(updateProductsDto: Product[]): Promise<any> {
+    return console.log(updateProductsDto);
+    // return Promise.all(
+    //   updateProductsDto.map(async (product) => {
+    //     return this.productsRepository
+    //       .createQueryBuilder()
+    //       .update(Product)
+    //       .set({ ...product })
+    //       .where("ItemCode = :ItemCode", { ItemCode: product.ItemCode })
+    //       .execute();
+    //   }),
+    // );
   }
 }
