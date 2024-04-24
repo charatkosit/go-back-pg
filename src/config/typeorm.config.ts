@@ -4,7 +4,7 @@ import { environment } from '../environments/environment'
 
 
 export const typeOrmConfig: TypeOrmModuleOptions ={
-    type: 'mysql',
+    type: 'postgres',
     host: environment.dbUrl,
     port: environment.port,
     username: environment.dbUsername,

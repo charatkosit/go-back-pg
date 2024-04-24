@@ -1,7 +1,7 @@
 server:
   stage: PROD
   dbUrl: 52.54.69.220
-  port: 3308
+  port: 5442
   dbUsername: rootSIT
   dbPassword: 1234
   dbName: testhaha

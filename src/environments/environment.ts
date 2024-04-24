@@ -2,9 +2,9 @@
 export const environment = {
   production: false,
   dbUrl: "127.0.0.1",
-  port: 3308,
-  dbUsername: "root",
-  dbPassword: "1234",
+  port: 5432,
+  dbUsername: "charat",
+  dbPassword: "Toyota8@",
   dbName: "testhaha",
   synchronize: true,
   sapApiToken: "z@hz3sNY#0ohB9SspeE9@fLDQ%r65x$k8LxL28VH72FfvRWgCn",
