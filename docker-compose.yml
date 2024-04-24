@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
     dev:
-        container_name: go-back-dev
-        image: go-back-dev:latest
+        container_name: go-back-pg-dev
+        image: go-back-pg-dev:latest
         build:
             context: .
             target: development
@@ -19,8 +19,8 @@ services:
             - /usr/src/app/node_modules
         restart: unless-stopped
     prod:
-        container_name: go-back-yyy
-        image: go-back-xxx:latest
+        container_name: go-back-pg-yyy
+        image: go-back-pg-xxx:latest
         build:
             context: .
             target: production

@@ -11,5 +11,5 @@ export const environment = {
   jwt_secrect: "!z$C&F)J@NcRfUjXn2r5u8x/A?D*G-Ka",
   baseUrl: "",
   project: "Build Dev:v0.1.39 on 28/7/23",
-  release: "Back-Dev",
+  release: "Back-pg-Dev",
 };
